@@ -2,13 +2,15 @@
 import express from 'express';
 const app=express();
 
+import { moviesRouters } from './routes/moviesRoute.js';
+
 // const {MongoClient}=require('mongodb');
 import { MongoClient } from 'mongodb';
 
 import dotenv from "dotenv";
 dotenv.config()
 
-const PORT=5000;
+const PORT=process.env.PORT;
 
 // Inbuilt Middleware by express
 app.use(express.json())
@@ -22,7 +24,7 @@ async function createConnection(){
            console.log("Mongodb Coonnected"); 
            return client;
 }
-const client= await createConnection();
+export const client= await createConnection();
 
 
 // 1.Home page Api Get Call method  ....
@@ -31,6 +33,11 @@ app.get("",(req,res)=>{
     res.send("Home Page !!!")
 })
 
+// Here used express Router concept ,,,,,
+
+app.use("/movies",moviesRouters)
+
+/*
 // 2.Get call - All movies Data,,,,,,
 app.get("/movies", async (req,res)=>{
     const movies=await client.db("B32WE").collection("movies").find({}).toArray();
@@ -82,9 +89,9 @@ app.put("/movies/:id",async(req,res)=>{
     const edited_Data=await client.db("B32WE").collection("movies").updateOne({id:id},{$set:data})
     res.send(edited_Data)
 })
-
+*/ 
 
 
 app.listen(PORT,()=>{
-    console.log("App started *****");
+    console.log(`App started in ${PORT}*****`);
 })
