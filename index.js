@@ -3,6 +3,7 @@ import express from 'express';
 const app=express();
 
 import { moviesRouters } from './routes/moviesRoute.js';
+import { usersRouter } from './routes/users.js';
 
 // const {MongoClient}=require('mongodb');
 import { MongoClient } from 'mongodb';
@@ -36,6 +37,7 @@ app.get("",(req,res)=>{
 // Here used express Router concept ,,,,,
 
 app.use("/movies",moviesRouters)
+app.use("/users",usersRouter)
 
 /*
 // 2.Get call - All movies Data,,,,,,

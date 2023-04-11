@@ -1,10 +1,13 @@
 import express from "express";
+const app=express();
 const router=express.Router();
 import{ client }from "../index.js"
+import {auth} from "../middleware/auth.js"
+
 
 
 // 2.Get call - All movies Data,,,,,,
-router.get("", async (req,res)=>{
+router.get("",async (req,res)=>{
     const movies=await client.db("B32WE").collection("movies").find({}).toArray();
     res.send(movies)
 
